@@ -87,7 +87,7 @@ class ChatRequest(BaseModel):
     message: str
 
 
-@app.get("/")
+@app.get("/api")
 def home():
     return {
         "status": "Wilson AI backend is running",
@@ -95,7 +95,7 @@ def home():
     }
 
 
-@app.post("/chat")
+@app.post("/api/chat")
 def chat(request: ChatRequest, http_request: Request):
 
     search_terms = [
