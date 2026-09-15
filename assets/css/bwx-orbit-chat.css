@@ -1,0 +1,1566 @@
+.bwx-orbit-chat {
+    --bwx-space-black: #02030a;
+    --bwx-space-blue: #07142d;
+    --bwx-nebula-blue: #183c75;
+    --bwx-star-white: rgba(255, 255, 255, 0.95);
+    --bwx-glow-blue: rgba(91, 157, 255, 0.65);
+
+    position: relative;
+    width: 100%;
+    min-height: 700px;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 50%,
+            #0b1b3a 0%,
+            #040916 45%,
+            #010208 100%
+        );
+
+    isolation: isolate;
+}
+
+
+/* ================================
+   STAR FIELD
+================================ */
+
+.bwx-orbit-stars {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(circle, rgba(150,190,255,.7) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,255,255,.5) 1px, transparent 1px);
+
+    background-size:
+        110px 110px,
+        170px 170px,
+        250px 250px;
+
+    background-position:
+        20px 30px,
+        80px 100px,
+        130px 40px;
+
+    animation: bwxOrbitStarsDrift 80s linear infinite;
+}
+
+
+@keyframes bwxOrbitStarsDrift {
+
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(-120px, 80px, 0);
+    }
+}
+
+
+/* ================================
+   NEBULAS
+================================ */
+
+.bwx-orbit-nebula {
+    position: absolute;
+    pointer-events: none;
+    filter: blur(70px);
+    border-radius: 50%;
+    z-index: -2;
+}
+
+
+.bwx-orbit-nebula-a {
+    width: 600px;
+    height: 350px;
+
+    left: -150px;
+    top: 10%;
+
+    background: rgba(34, 92, 190, 0.18);
+
+    transform: rotate(-25deg);
+
+    animation: bwxOrbitNebulaA 14s ease-in-out infinite alternate;
+}
+
+
+.bwx-orbit-nebula-b {
+    width: 500px;
+    height: 400px;
+
+    right: -150px;
+    bottom: 5%;
+
+    background: rgba(92, 48, 180, 0.16);
+
+    transform: rotate(25deg);
+
+    animation: bwxOrbitNebulaB 18s ease-in-out infinite alternate;
+}
+
+
+@keyframes bwxOrbitNebulaA {
+
+    from {
+        transform: translate(0, 0) rotate(-25deg) scale(1);
+    }
+
+    to {
+        transform: translate(80px, 30px) rotate(-15deg) scale(1.15);
+    }
+}
+
+
+@keyframes bwxOrbitNebulaB {
+
+    from {
+        transform: translate(0, 0) rotate(25deg) scale(1);
+    }
+
+    to {
+        transform: translate(-70px, -40px) rotate(15deg) scale(1.2);
+    }
+}
+
+
+/* ================================
+   MAIN PANEL
+================================ */
+
+.bwx-orbit-panel {
+    position: relative;
+
+    width: min(850px, 90%);
+    min-height: 520px;
+
+    padding: 45px;
+
+    border: 1px solid rgba(145, 190, 255, 0.18);
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(16, 30, 61, 0.78),
+            rgba(3, 7, 18, 0.88)
+        );
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 0 80px rgba(35, 91, 180, 0.18),
+        inset 0 0 50px rgba(70, 120, 255, 0.04);
+
+    animation: bwxOrbitPanelFloat 7s ease-in-out infinite;
+}
+
+
+@keyframes bwxOrbitPanelFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.bwx-orbit-header {
+    text-align: center;
+}
+
+
+.bwx-orbit-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    margin-bottom: 12px;
+
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: rgba(160, 200, 255, 0.65);
+}
+
+
+.bwx-orbit-status-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #6da9ff;
+
+    box-shadow:
+        0 0 8px #6da9ff,
+        0 0 18px rgba(109,169,255,.8);
+
+    animation: bwxOrbitPulse 2s ease-in-out infinite;
+}
+
+
+@keyframes bwxOrbitPulse {
+
+    0%,
+    100% {
+        opacity: .45;
+        transform: scale(.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+
+.bwx-orbit-title {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700;
+    letter-spacing: 7px;
+
+    color: white;
+
+    text-shadow:
+        0 0 15px rgba(130, 180, 255, .45),
+        0 0 40px rgba(80, 130, 255, .2);
+}
+
+
+.bwx-orbit-title-star {
+    display: inline-block;
+
+    margin: 0 8px;
+
+    color: #9fc7ff;
+
+    animation: bwxOrbitStarPulse 3s ease-in-out infinite;
+}
+
+
+@keyframes bwxOrbitStarPulse {
+
+    0%,
+    100% {
+        opacity: .5;
+        transform: scale(.8) rotate(0deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.25) rotate(90deg);
+    }
+}
+
+
+.bwx-orbit-subtitle {
+    margin: 12px 0 0;
+
+    color: rgba(210, 225, 255, .65);
+
+    font-size: 14px;
+    letter-spacing: .5px;
+}
+
+
+/* ================================
+   SUGGESTIONS
+================================ */
+
+.bwx-orbit-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 9px;
+
+    margin: 30px 0 20px;
+}
+
+
+.bwx-orbit-suggestion {
+    padding: 9px 14px;
+
+    border: 1px solid rgba(130, 175, 255, .18);
+    border-radius: 100px;
+
+    background: rgba(80, 130, 220, .06);
+
+    color: rgba(220, 235, 255, .7);
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+
+.bwx-orbit-suggestion:hover {
+    transform: translateY(-2px);
+
+    border-color: rgba(130, 190, 255, .5);
+
+    background: rgba(90, 150, 255, .12);
+
+    box-shadow:
+        0 0 20px rgba(80, 140, 255, .12);
+}
+
+
+/* ================================
+   CONVERSATION
+================================ */
+
+.bwx-orbit-conversation {
+    min-height: 100px;
+    max-height: 260px;
+
+    overflow-y: auto;
+
+    padding: 10px 4px;
+
+    scrollbar-width: thin;
+}
+
+
+.bwx-orbit-welcome {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 20px;
+
+    color: rgba(190, 210, 245, .5);
+
+    font-size: 13px;
+}
+
+
+.bwx-orbit-welcome-icon {
+    color: #8ebcff;
+
+    animation: bwxOrbitStarPulse 3s ease-in-out infinite;
+}
+
+
+/* ================================
+   MESSAGES
+================================ */
+
+.bwx-orbit-message {
+    max-width: 75%;
+
+    margin: 10px 0;
+    padding: 11px 15px;
+
+    border-radius: 15px;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+.bwx-orbit-message-user {
+    margin-left: auto;
+
+    color: white;
+
+    background: rgba(78, 132, 220, .18);
+
+    border: 1px solid rgba(100, 160, 255, .2);
+}
+
+
+.bwx-orbit-message-ai {
+    margin-right: auto;
+
+    color: rgba(230, 240, 255, .85);
+
+    background: rgba(255,255,255,.035);
+
+    border: 1px solid rgba(255,255,255,.08);
+}
+
+
+/* ================================
+   INPUT
+================================ */
+
+.bwx-orbit-input-wrap {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    margin-top: 15px;
+
+    border-radius: 16px;
+}
+
+
+.bwx-orbit-input-glow {
+    position: absolute;
+    inset: -2px;
+
+    border-radius: 17px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(90, 160, 255, .5),
+        rgba(150, 100, 255, .4),
+        transparent
+    );
+
+    opacity: .2;
+
+    filter: blur(8px);
+
+    pointer-events: none;
+
+    transition: opacity .3s ease;
+}
+
+
+.bwx-orbit-input-wrap:focus-within .bwx-orbit-input-glow {
+    opacity: .8;
+}
+
+
+.bwx-orbit-input {
+    position: relative;
+
+    width: 100%;
+
+    padding: 16px 55px 16px 18px;
+
+    border: 1px solid rgba(130, 175, 255, .18);
+    border-radius: 15px;
+
+    outline: none;
+
+    background: rgba(2, 6, 16, .75);
+
+    color: white;
+
+    font-size: 14px;
+}
+
+
+.bwx-orbit-input::placeholder {
+    color: rgba(190, 210, 245, .38);
+}
+
+
+.bwx-orbit-input:focus {
+    border-color: rgba(120, 175, 255, .45);
+}
+
+
+.bwx-orbit-send {
+    position: absolute;
+    right: 7px;
+
+    width: 38px;
+    height: 38px;
+
+    border: 0;
+    border-radius: 11px;
+
+    background: rgba(80, 140, 240, .18);
+
+    color: #a9ccff;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+
+.bwx-orbit-send:hover {
+    transform: translateY(-2px);
+
+    background: rgba(90, 150, 255, .3);
+
+    box-shadow:
+        0 0 18px rgba(90, 150, 255, .25);
+}
+
+
+/* ================================
+   FOOTER
+================================ */
+
+.bwx-orbit-footer {
+    display: flex;
+    justify-content: center;
+    gap: 9px;
+
+    margin-top: 20px;
+
+    font-size: 8px;
+    letter-spacing: 2px;
+
+    color: rgba(160, 190, 230, .3);
+}
+
+
+.bwx-orbit-footer-divider {
+    color: rgba(120, 170, 255, .5);
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 650px) {
+
+    .bwx-orbit-panel {
+        padding: 30px 20px;
+    }
+
+    .bwx-orbit-title {
+        letter-spacing: 4px;
+    }
+
+    .bwx-orbit-suggestions {
+        display: none;
+    }
+
+    .bwx-orbit-message {
+        max-width: 88%;
+    }
+
+}
+
+/* =========================================
+   ANDROMEDA GALAXY
+========================================= */
+
+.bwx-orbit-galaxy {
+    position: absolute;
+    width: 520px;
+    height: 300px;
+
+    right: -120px;
+    top: 50%;
+
+    transform: translateY(-50%) rotate(-18deg);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    opacity: .8;
+
+    z-index: -1;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(255, 245, 220, .95) 0%,
+            rgba(255, 220, 170, .65) 4%,
+            rgba(170, 190, 255, .45) 12%,
+            rgba(100, 130, 255, .2) 25%,
+            transparent 55%
+        );
+
+    filter:
+        blur(.3px)
+        drop-shadow(0 0 30px rgba(110, 150, 255, .35));
+
+    animation:
+        bwxGalaxySpin 18s linear infinite;
+}
+
+
+/* Galaxy arms */
+
+.bwx-orbit-galaxy::before,
+.bwx-orbit-galaxy::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: -20%;
+
+    border-radius: 50%;
+
+    background:
+        repeating-radial-gradient(
+            ellipse,
+            transparent 0px,
+            transparent 20px,
+            rgba(140, 170, 255, .08) 24px,
+            rgba(255, 220, 190, .12) 28px,
+            transparent 38px
+        );
+
+    transform: rotate(25deg);
+
+    filter: blur(4px);
+}
+
+
+.bwx-orbit-galaxy::after {
+
+    transform: rotate(-25deg);
+
+    opacity: .65;
+
+    filter: blur(8px);
+}
+
+
+@keyframes bwxGalaxySpin {
+
+    from {
+        transform:
+            translateY(-50%)
+            rotate(-18deg)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translateY(-50%)
+            rotate(12deg)
+            scale(1.05);
+    }
+
+    to {
+        transform:
+            translateY(-50%)
+            rotate(42deg)
+            scale(1);
+    }
+}
+
+
+/* =========================================
+   LEFT NEBULA CLOUD
+========================================= */
+
+.bwx-orbit-nebula-left {
+
+    position: absolute;
+
+    width: 650px;
+    height: 500px;
+
+    left: -300px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at 60% 40%,
+            rgba(80, 120, 255, .25),
+            transparent 45%
+        ),
+        radial-gradient(
+            ellipse at 35% 60%,
+            rgba(150, 70, 210, .22),
+            transparent 50%
+        ),
+        radial-gradient(
+            ellipse at 70% 70%,
+            rgba(30, 180, 220, .12),
+            transparent 45%
+        );
+
+    filter: blur(45px);
+
+    opacity: .7;
+
+    z-index: -2;
+
+    animation: bwxNebulaFlow 16s ease-in-out infinite alternate;
+}
+
+
+@keyframes bwxNebulaFlow {
+
+    0% {
+        transform:
+            translateY(-50%)
+            translateX(0)
+            scale(1);
+    }
+
+    100% {
+        transform:
+            translateY(-48%)
+            translateX(90px)
+            scale(1.18);
+    }
+}
+
+
+/* =========================================
+   SHOOTING STARS
+========================================= */
+
+.bwx-orbit-shooting-star {
+
+    position: absolute;
+
+    width: 4px;
+    height: 4px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    box-shadow:
+        0 0 6px white,
+        0 0 15px rgba(150, 200, 255, .9);
+
+    pointer-events: none;
+
+    z-index: 2;
+
+    opacity: 0;
+
+    transform: rotate(-35deg);
+
+    animation:
+        bwxShootingStar 1.8s linear forwards;
+}
+
+
+.bwx-orbit-shooting-star::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 130px;
+    height: 2px;
+
+    right: 2px;
+    top: 1px;
+
+    transform-origin: right center;
+
+    background:
+        linear-gradient(
+            to left,
+            rgba(255,255,255,.9),
+            rgba(130,180,255,.45),
+            transparent
+        );
+
+    filter: blur(1px);
+}
+
+
+@keyframes bwxShootingStar {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translate3d(0, 0, 0)
+            rotate(-35deg);
+    }
+
+    8% {
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            translate3d(-600px, 400px, 0)
+            rotate(-35deg);
+    }
+}
+
+
+/* Don't overwhelm small screens */
+
+@media (max-width: 650px) {
+
+    .bwx-orbit-galaxy {
+        right: -250px;
+        opacity: .4;
+    }
+
+    .bwx-orbit-nebula-left {
+        left: -450px;
+        opacity: .35;
+    }
+
+}
+
+
+.bwx-orbit-space {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+    z-index: 0;
+}
+
+.bwx-orbit-panel {
+    position: relative;
+    z-index: 2;
+}
+
+
+/* =========================================================
+   BWX CONTACT / BLACK HOLE SECTION
+   ========================================================= */
+
+.bwx-contact-space {
+  position: relative;
+  width: 100%;
+  min-height: 850px;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      ellipse at 72% 52%,
+      rgba(40, 22, 12, 0.22),
+      transparent 30%
+    ),
+    radial-gradient(
+      ellipse at 20% 55%,
+      rgba(20, 35, 70, 0.16),
+      transparent 38%
+    ),
+    #010208;
+
+  color: #fff;
+}
+
+
+/* =========================================================
+   CANVAS
+   ========================================================= */
+
+#bwx-blackhole-canvas {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  z-index: 1;
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   CONTENT CONTAINER
+   ========================================================= */
+
+.bwx-contact-container {
+  position: relative;
+
+  width: 100%;
+  max-width: 1400px;
+
+  min-height: 850px;
+
+  margin: 0 auto;
+
+  padding: 90px 60px 80px;
+
+  z-index: 5;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.bwx-contact-copy {
+  position: relative;
+
+  width: min(560px, 100%);
+
+  z-index: 10;
+
+  margin-left: 20px;
+}
+
+
+.bwx-contact-kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 14px;
+
+  font-family: monospace;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 3px;
+
+  color: rgba(190, 220, 255, 0.65);
+}
+
+
+.bwx-contact-kicker-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: rgba(170, 220, 255, 0.95);
+
+  box-shadow:
+    0 0 6px rgba(150, 210, 255, 0.9),
+    0 0 16px rgba(100, 180, 255, 0.65);
+
+  animation: bwxContactStatusPulse 2s ease-in-out infinite;
+}
+
+
+.bwx-contact-heading {
+  margin: 0;
+
+  font-size: clamp(42px, 5vw, 72px);
+
+  line-height: 1;
+
+  font-weight: 300;
+
+  letter-spacing: -2px;
+
+  color: #ffffff;
+
+  text-shadow:
+    0 0 25px rgba(255, 255, 255, 0.08),
+    0 0 70px rgba(120, 170, 255, 0.08);
+}
+
+
+.bwx-contact-description {
+  max-width: 540px;
+
+  margin: 22px 0 0;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+
+  font-weight: 300;
+
+  color: rgba(220, 230, 245, 0.68);
+
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.8);
+}
+
+
+/* =========================================================
+   MAIN SCENE
+   ========================================================= */
+
+.bwx-contact-scene {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 580px;
+
+  margin-top: 20px;
+}
+
+
+/* =========================================================
+   CONTACT MODULE
+   ========================================================= */
+
+.bwx-contact-module {
+  position: absolute;
+
+  left: 20px;
+  top: 65px;
+
+  width: 430px;
+  height: 430px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  animation: bwxContactFloat 7s ease-in-out infinite;
+
+  z-index: 20;
+}
+
+
+/* =========================================================
+   ORBITAL RINGS
+   ========================================================= */
+
+.bwx-contact-ring {
+  position: absolute;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  transform-origin: center;
+}
+
+
+.bwx-contact-ring-a {
+  width: 470px;
+  height: 175px;
+
+  border: 1px solid rgba(150, 205, 255, 0.14);
+
+  transform: rotate(-22deg);
+
+  box-shadow:
+    0 0 30px rgba(100, 170, 255, 0.04);
+
+  animation: bwxContactOrbitA 17s linear infinite;
+}
+
+
+.bwx-contact-ring-b {
+  width: 500px;
+  height: 215px;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+
+  transform: rotate(48deg);
+
+  animation: bwxContactOrbitB 23s linear infinite reverse;
+}
+
+
+.bwx-contact-ring-c {
+  width: 385px;
+  height: 385px;
+
+  border: 1px dashed rgba(130, 185, 240, 0.08);
+
+  animation: bwxContactOrbitC 35s linear infinite;
+}
+
+
+/* =========================================================
+   CONTACT CARD
+   ========================================================= */
+
+.bwx-contact-card {
+  position: relative;
+
+  width: 350px;
+
+  padding: 30px 30px 24px;
+
+  box-sizing: border-box;
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(17, 27, 47, 0.88),
+      rgba(3, 7, 16, 0.78)
+    );
+
+  border: 1px solid rgba(180, 220, 255, 0.18);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.72),
+    0 0 45px rgba(50, 100, 180, 0.07),
+    inset 0 0 35px rgba(130, 180, 255, 0.035);
+
+  overflow: hidden;
+}
+
+
+.bwx-contact-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -100%;
+
+  width: 70%;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(170, 215, 255, 0.055),
+      transparent
+    );
+
+  transform: skewX(-20deg);
+
+  animation: bwxContactScan 6s ease-in-out infinite;
+}
+
+
+.bwx-contact-card::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 1px;
+
+  border-radius: 23px;
+
+  pointer-events: none;
+
+  box-shadow:
+    inset 0 0 45px rgba(100, 160, 255, 0.025);
+}
+
+
+/* =========================================================
+   CARD HEADER
+   ========================================================= */
+
+.bwx-contact-card-header {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  font-family: monospace;
+
+  font-size: 10px;
+
+  letter-spacing: 2.5px;
+
+  color: rgba(200, 225, 255, 0.65);
+}
+
+
+.bwx-contact-status {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #b8e6ff;
+
+  box-shadow:
+    0 0 7px rgba(150, 220, 255, 0.9),
+    0 0 16px rgba(100, 190, 255, 0.5);
+
+  animation: bwxContactStatusPulse 1.8s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   LINES
+   ========================================================= */
+
+.bwx-contact-line {
+  width: 100%;
+  height: 1px;
+
+  margin: 20px 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(150, 205, 255, 0.18),
+      rgba(150, 205, 255, 0.02)
+    );
+}
+
+
+.bwx-contact-line-bottom {
+  margin: 20px 0 16px;
+}
+
+
+/* =========================================================
+   CONTACT ITEMS
+   ========================================================= */
+
+.bwx-contact-item {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 13px 0;
+
+  z-index: 2;
+}
+
+
+.bwx-contact-icon {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  border: 1px solid rgba(150, 205, 255, 0.13);
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(100, 160, 255, 0.10),
+      rgba(5, 10, 20, 0.5)
+    );
+
+  color: rgba(190, 225, 255, 0.85);
+
+  box-shadow:
+    inset 0 0 15px rgba(100, 170, 255, 0.04),
+    0 0 20px rgba(50, 120, 200, 0.04);
+}
+
+
+.bwx-contact-icon i {
+  font-size: 16px;
+}
+
+
+.bwx-contact-item-content span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-family: monospace;
+
+  font-size: 9px;
+
+  letter-spacing: 2px;
+
+  color: rgba(180, 210, 240, 0.42);
+}
+
+
+.bwx-contact-item-content p {
+  margin: 0;
+
+  font-size: 14px;
+
+  color: rgba(235, 242, 255, 0.88);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.bwx-contact-footer {
+  position: relative;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  font-family: monospace;
+
+  font-size: 8px;
+
+  letter-spacing: 1.8px;
+
+  color: rgba(170, 200, 230, 0.35);
+
+  z-index: 3;
+}
+
+
+.bwx-contact-pulse {
+  color: rgba(170, 225, 255, 0.7);
+}
+
+
+.bwx-contact-pulse span {
+  color: rgba(170, 225, 255, 0.95);
+
+  text-shadow:
+    0 0 7px rgba(130, 215, 255, 0.9);
+}
+
+
+/* =========================================================
+   BLACK HOLE LABEL
+   ========================================================= */
+
+.bwx-blackhole-label {
+  position: absolute;
+
+  right: 13%;
+  bottom: 25px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  font-family: monospace;
+
+  font-size: 9px;
+
+  letter-spacing: 2px;
+
+  color: rgba(190, 205, 225, 0.28);
+
+  z-index: 10;
+}
+
+
+.bwx-blackhole-label strong {
+  color: rgba(225, 235, 250, 0.5);
+
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes bwxContactFloat {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-11px) rotate(0.4deg);
+  }
+}
+
+
+@keyframes bwxContactOrbitA {
+
+  from {
+    transform: rotate(-22deg) rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-22deg) rotate(360deg);
+  }
+}
+
+
+@keyframes bwxContactOrbitB {
+
+  from {
+    transform: rotate(48deg) rotate(0deg);
+  }
+
+  to {
+    transform: rotate(48deg) rotate(360deg);
+  }
+}
+
+
+@keyframes bwxContactOrbitC {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+@keyframes bwxContactStatusPulse {
+
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.85);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+
+@keyframes bwxContactScan {
+
+  0% {
+    left: -100%;
+  }
+
+  45%,
+  100% {
+    left: 140%;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .bwx-contact-container {
+    padding: 70px 25px 50px;
+  }
+
+  .bwx-contact-copy {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .bwx-contact-heading {
+    font-size: 48px;
+  }
+
+  .bwx-contact-scene {
+    min-height: 700px;
+  }
+
+  .bwx-contact-module {
+    left: 50%;
+    top: 40px;
+
+    transform: translateX(-50%);
+
+    width: 380px;
+    height: 380px;
+  }
+
+  .bwx-contact-ring-a {
+    width: 410px;
+  }
+
+  .bwx-contact-ring-b {
+    width: 430px;
+  }
+
+  .bwx-contact-card {
+    width: 330px;
+  }
+
+  .bwx-blackhole-label {
+    right: 50%;
+    transform: translateX(50%);
+
+    bottom: 15px;
+
+    white-space: nowrap;
+  }
+}
+
+
+@media (max-width: 500px) {
+
+  .bwx-contact-space {
+    min-height: 900px;
+  }
+
+  .bwx-contact-container {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .bwx-contact-heading {
+    font-size: 42px;
+  }
+
+  .bwx-contact-description {
+    font-size: 14px;
+  }
+
+  .bwx-contact-module {
+    width: 340px;
+    height: 340px;
+  }
+
+  .bwx-contact-card {
+    width: 310px;
+    padding: 25px;
+  }
+
+  .bwx-contact-ring-a {
+    width: 360px;
+  }
+
+  .bwx-contact-ring-b {
+    width: 380px;
+  }
+
+  .bwx-contact-ring-c {
+    width: 320px;
+    height: 320px;
+  }
+}
