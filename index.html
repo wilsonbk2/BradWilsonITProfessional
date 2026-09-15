@@ -17,6 +17,7 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
+  <link rel="stylesheet" href="assets/css/bwx-orbit-chat.css">
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -60,6 +61,7 @@
         <ul>
           <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
           <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
+          <li><a href="#bwxOrbitChat" class="nav-link scrollto"><i class="bx bx-abacus"></i> <span>AI Assistant</span></a></li>
           <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li>
           <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Portfolio</span></a></li>
           <li><a href="#services" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Services</span></a></li>
@@ -73,7 +75,7 @@
   <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
     <div class="hero-container" data-aos="fade-in">
       <h1>Brad Wilson</h1>
-      <p>I'm a <span class="typed" data-typed-items="Senior Software Engineer, Data Scientist,  IT Systems Specialist"></span></p>
+      <p>I'm a <span class="typed" data-typed-items="Software Engineer, Data Scientist,  IT Systems Specialist"></span></p>
     </div>
   </section><!-- End Hero -->
 
@@ -109,6 +111,123 @@
       </div>
     </section><!-- End About Section -->
 
+
+
+    <section class="bwx-orbit-chat" id="bwxOrbitChat">
+
+    <canvas
+    id="bwxOrbitSpace"
+    class="bwx-orbit-space"
+    aria-hidden="true">
+    </canvas>
+
+    <!-- <div class="bwx-orbit-nebula-left" aria-hidden="true"></div>
+
+    <div class="bwx-orbit-galaxy" aria-hidden="true"></div>
+ -->
+    <div class="bwx-orbit-stars" aria-hidden="true"></div>
+
+    <div class="bwx-orbit-nebula bwx-orbit-nebula-a" aria-hidden="true"></div>
+
+    <div class="bwx-orbit-nebula bwx-orbit-nebula-b" aria-hidden="true"></div>
+
+
+
+    <div class="bwx-orbit-panel">
+
+        <div class="bwx-orbit-header">
+            <div class="bwx-orbit-status">
+                <span class="bwx-orbit-status-dot"></span>
+                <span>ONLINE</span>
+            </div>
+
+            <div class="bwx-orbit-title">
+                <span class="bwx-orbit-title-star">✦</span>
+                WILSON AI
+                <span class="bwx-orbit-title-star">✦</span>
+            </div>
+
+            <p class="bwx-orbit-subtitle">
+                Explore my experience, projects &amp; technical background
+            </p>
+        </div>
+
+        <div class="bwx-orbit-suggestions">
+            <button class="bwx-orbit-suggestion" type="button">
+                What projects have you built?
+            </button>
+
+            <button class="bwx-orbit-suggestion" type="button">
+                What technologies do you work with?
+            </button>
+
+            <button class="bwx-orbit-suggestion" type="button">
+                Tell me about your experience
+            </button>
+        </div>
+
+        <div class="bwx-orbit-conversation" id="bwxOrbitConversation">
+            <div class="bwx-orbit-welcome">
+                <span class="bwx-orbit-welcome-icon">✦</span>
+                <p>Ask me anything about my work.</p>
+            </div>
+        </div>
+
+        <div class="bwx-orbit-input-wrap">
+
+            <div class="bwx-orbit-input-glow"></div>
+
+            <input
+                type="text"
+                id="bwxOrbitInput"
+                class="bwx-orbit-input"
+                placeholder="Ask me anything..."
+                autocomplete="off"
+            >
+
+            <button
+                type="button"
+                id="bwxOrbitSend"
+                class="bwx-orbit-send"
+                aria-label="Send message"
+            >
+                <span>↑</span>
+            </button>
+
+        </div>
+
+        <div class="bwx-orbit-footer">
+            <span>AI PORTFOLIO ASSISTANT</span>
+            <span class="bwx-orbit-footer-divider">•</span>
+            <span>EXPLORE THE UNKNOWN</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <section id="facts" class="facts section-bg">
   <div class="container">
 
@@ -125,11 +244,11 @@
       <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up">
         <div class="count-box">
           <i class="bi bi-file-code"></i>
-          <span data-purecounter-start="0"
-                data-purecounter-end="288656"
-                data-purecounter-duration="2"
+          <span data-purecounter-start="500000"
+                data-purecounter-end="1000000"
+                data-purecounter-duration="1"
                 class="purecounter"></span>
-          <p><strong>Data Records</strong> Analyzed</p>
+          <p><strong>Production Records </strong> Managed</p>
         </div>
       </div>
 
@@ -138,11 +257,11 @@
            data-aos-delay="100">
         <div class="count-box">
           <i class="bi bi-graph-up"></i>
-          <span data-purecounter-start="0"
-                data-purecounter-end="30"
-                data-purecounter-duration="2"
+          <span data-purecounter-start="100"
+                data-purecounter-end="40"
+                data-purecounter-duration="1"
                 class="purecounter"></span>
-          <p><strong>Performance Improvement</strong> Projects</p>
+          <p><strong>Process Improvement</strong> Initiatives</p>
         </div>
       </div>
 
@@ -151,11 +270,11 @@
            data-aos-delay="200">
         <div class="count-box">
           <i class="bi bi-display"></i>
-          <span data-purecounter-start="0"
-                data-purecounter-end="1000000"
-                data-purecounter-duration="2"
+          <span data-purecounter-start="70"
+                data-purecounter-end="8"
+                data-purecounter-duration="1"
                 class="purecounter"></span>
-          <p><strong>Over One Million</strong> Lines of Code Written</p>
+          <p><strong>Years of Development</strong> Experience</p>
         </div>
       </div>
 
@@ -164,11 +283,11 @@
            data-aos-delay="300">
         <div class="count-box">
           <i class="bi bi-people"></i>
-          <span data-purecounter-start="0"
-                data-purecounter-end="2"
-                data-purecounter-duration="2"
+          <span data-purecounter-start="50"
+                data-purecounter-end="3"
+                data-purecounter-duration="3"
                 class="purecounter"></span>
-          <p><strong>Enterprise</strong> Database Systems Developed</p>
+          <p><strong>Enterprise Systems</strong>  Architected</p>
         </div>
       </div>
 
@@ -177,259 +296,237 @@
   </div>
     </section>  <!-- === End Facts Section --> 
 
+<section id="resume" class="resume">
+  <div class="container">
 
-    <!-- ======= Resume Section ======= -->
-    <section id="resume" class="resume">
-      <div class="container">
+    <div class="section-title">
+      <h2>Resume</h2>
+      <p>Below you can find a summary of my current resume including my education, leadership, and professional experience.</p>
+    </div>
 
-        <div class="section-title">
-          <h2>Resume</h2>
-          <p>Below you can find a summary of my current resume including my education, leadership, and professional experience. You can find my entire resume <a href="file:///C:/Users/brad/Desktop/Portfolio/Personal%20Employee%20Files/Brad%20Wilson%20Resume.pdf"> linked here.</a></p>
+    <!-- ================= TOP 2-COLUMN SECTION ================= -->
+    <div class="row">
+
+      <!-- LEFT COLUMN -->
+      <div class="col-lg-6" data-aos="fade-up">
+
+        <h3 class="resume-title">Summary</h3>
+        <div class="resume-item pb-0">
+          <h4>Brad Wilson</h4>
+          <ul>
+            <li>location</li>
+            <li>phone</li>
+            <li>email</li>
+          </ul>
         </div>
 
-        <div class="row">
-          <div class="col-lg-6" data-aos="fade-up">
-            <h3 class="resume-title">Summary</h3>
-            <div class="resume-item pb-0">
-              <h4>Brad Wilson</h4>
-              <ul>
-                <li>New Kent VA United States</li>
-                <li>(804) 572-0583</li>
-                <li>wilsonbk2@vcu.edu</li>
-              </ul>
-            </div>
-
-      <h3 class="resume-title">Education</h3>
-      <div class="resume-item">
-              <h4>Bachelor of Science &amp; Information Systems</h4>
-              <h5>2013 - 2017</h5>
-              <p><em>Virginia Commonwealth University, Richmond, VA</em></p>
-              <p></p>
-            </div>
-      <div class="resume-item">
-              <h4>Council for Six Sigma Certification</h4>
-              <h5>August 2019</h5>
-              <p><em>Six Sigma White Belt (6σ)</em></p>
-              <p></p>
-            </div>
-			<div class="resume-item">
-              <h4>Dapp University</h4>
-              <h5>August 2021</h5>
-              <p><em>Blockchain Developer Boot Camp</em></p>
-              <p></p>
-            </div>
-			 <div class="resume-item">
-              <h4>National Association for Healthcare Quality</h4>
-              <h5>December 2021</h5>
-              <p><em>Certified Professional in Healthcare Quality (CPHQ)</em></p>
-              <p></p>
-            </div>
-			<h3 class="resume-title">Personal Acheivements</h3>
-			<div class="resume-item">
-              <h4>First Degree Black Belt</h4>
-              <h5>February 2008</h5>
-              <p><em>Seikukan Mongoose Karate Club</em></p>
-			  <!-- <img src="assets/img/portfolio/HomePortfolio/black belt.png"> -->
-              <p></p>
-            </div>
-              <p></p>
-            </div>
-          </div>
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-      <h3 class="resume-title">Professional Experience</h3>
-            
+        <h3 class="resume-title">Education</h3>
 
         <div class="resume-item">
-              <h4>Software Engineer / Business Systems Architect</h4>
-              <h5>2022 - Present</h5>
-              <p><em>Virginia Department of Transportation (VDOT)</em></p>
-              <ul>
-                <li>Architect and maintain enterprise business applications, automation systems, and reporting platforms supporting statewide federal program operations.</li>
-                <li>Proactively identified and addressed gaps in enterprise data infrastructure by independently developing a Financial Enterprise Database Solution (Unity) for the Federal Programs Division of VDOT, establishing a core operational system without initial direction.</li>
-                <li>Designed and implemented relational database architecture, business logic frameworks, workflow automation, and role-based security models supporting district and central office operations.</li>
-                <li>Led design and implementation of Unity as Steering Committee Manager, facilitating bi-weekly stakeholder sessions to define business rules, gather requirements, coordinate UAT, employee training and align technical delivery with organizational needs.</li>
-                <li>Partnered with executive leadership, business stakeholders, and IT teams to translate business needs into modernized system solutions, leading application redesign and workflow automation to reduce reliance on manual and spreadsheet-based processes.</li>
-                <li>Built integrated enterprise automation systems for compliance reporting, data management, and cross-functional team workflows by unifying data ingestion, processing, and visualization using PowerApps, Power Automate, Python, JavaScript, Selenium, SQL, Power BI, etc.</li>
-                <li>Engineered automated ETL and reporting pipelines on a dedicated computer node, reducing manual workloads by up to 85% while improving data accuracy and compliance reliability.</li>
-                <li>Developed interactive business intelligence dashboards and executive reporting tools delivering real-time performance metrics and operational insights.</li>
-                <li>Resolved high-impact system outages affecting enterprise data flows during server migration activities, restoring database and reporting services under time-sensitive conditions.</li>
-                <li>Resolved complex production issues across databases, reporting systems, automation frameworks, and enterprise application infrastructure in a production environment.</li>
-              </ul>
-            </div>
+          <h4>Bachelor of Science</h4>
+          <h5>2013 - 2017</h5>
+          <p>Virginia Commonwealth University, Richmond, VA</p>
+          <p><em>Information Systems & Computer Science</em></p>
+        </div>
 
+        <h3 class="resume-title">Professional Development</h3>
 
+        <div class="resume-item">
+          <h4>Dapp University</h4>
+          <h5>August 2020</h5>
+          <p><em>Software Development Training – Blockchain Systems Focus</em></p>
+        </div>
 
+        <div class="resume-item">
+          <h4>National Association for Healthcare Quality</h4>
+          <h5>December 2021</h5>
+          <p><em>Training in process improvement, quality systems, and performance/operational standardization principles.</em></p>
+        </div>
 
-      <div class="resume-item">
-              <h4>Software Developer/Data Scientist</h4>
-              <h5>2019 - 2022</h5>
-              <p><em>Virginia Department of Behavioral Health (DBHDS)</p>
-              <ul>
-                <il>Promoted for oustanding work done for the organization as a whole.</li>
-                <li>Manager of the Quality Assurance Performance Improvement Program (QAPI).</li>
-                <li>Lead data collection approach, analysis, and presentation to justify a 1 million dollar budget increase for the facility. </li>
-                <li>Revolutionized the facility’s data usage by introducing new age of data analytics and artificial intelligence software (Power BI), creating an educational course for Power BI, and developing the QAPI Centralized Database Information System.</li>
-                <li>Investigated, monitored, and created new data and data sources to find areas for performance improvement projects to prevent reoccurrence of adverse events and achieve compliance with state and federal regulations. </li>
-              </ul>
-            </div>
+        <h3 class="resume-title">Personal Acheivements</h3>
 
-
-      <div class="resume-item">
-              <h4>Junior Developer</h4>
-              <h5>2018 - 2019</h5>
-              <p><em>Virginia Department of Behavioral Health (DBHDS)</em></p>
-              <ul>
-				        <li>Direct & maintain all computer systems and IT solutions within the HR Department.</li>
-                <li>Provided high level administrative and technical support to the Human Resource Department, as well as maintaining internal & external HR Databases.</li>
-                <li>Produce complex reports regarding HR data, and modifying reports for streamlining processes.</li>
-                <li>Attended administrative or professional meetings, and facilitating solutions or statistical evidence for situations regarding the hospital.</li>
-              </ul>
-            </div>
-
-
-			<div class="resume-item">
-              <h4>Stand Alone IT Business</h4>
-              <h5>2013 - Present</h5>
-              <p><em>Brad Wilson IT Enterprises, West Point, VA</em></p>
-              <ul>
-                <li>Manage and Plan IT projects including hardware needs assessment, hardware procurement, scheduled hardware installations, systems checks, software installation, user training/implementation, regular maintenance, and user troubleshooting/consultation.</li>
-                <li>Installed computer Operating Systems, disk management as needed upon scope of installation, including multiple boot drives, partitioning drives, IDE configuration and component frequencies.</li>
-                <li>Maintenance of laptop & desktop internal & external components; as well as trouble shooting component problems.</li>
-                <li>Designed and Coded with PHP, HTML, and BOOTSRAP to create fully functional Websites for clients.</li>
-              </ul>
-            </div>
-
-
-          </div>
+        <div class="resume-item">
+          <h4>First Degree Black Belt (Shodan)</h4>
+          <h5>February 2008</h5>
+          <p><em>Seikukan Mongoose Karate - 少林流 (Shōrin-ryū)</em></p>
         </div>
 
       </div>
-    </section><!-- End Resume Section -->
 
-    <!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio section-bg">
-      <div class="container">
+      <!-- RIGHT COLUMN (CURRENT EXPERIENCE ONLY) -->
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
 
-        <div class="section-title">
-          <h2>Portfolio</h2>
-          <p>Please feel free to dive into my portfolio below. Currently most pages are under construction for more in-depth detail, but all pages should have photos of the project and a description.</p>
+        <h3 class="resume-title">Current Position</h3>
+
+        <div class="resume-item">
+          <h4>Software Engineer / Business Systems Architect</h4>
+          <h5>2022 - Present</h5>
+          <p><em>Virginia Department of Transportation (VDOT)</em></p>
+          <ul>
+            <li>Architect and maintain enterprise applications, automated scripting, and analytics platforms supporting statewide federal program operations.</li>
+            <li>Proactively identified and addressed gaps in enterprise data infrastructure by independently developing a Financial Enterprise Database Solution (Unity) for the Federal Programs Division of VDOT, establishing a core operational system without initial direction.</li>
+            <li>Architected relational database architecture, business logic frameworks, workflow automation, and role-based security models supporting district and central office operations.</li>
+            <li>Led design and implementation of Unity as Steering Committee Manager, facilitating bi-weekly stakeholder sessions to define business rules, gather requirements, coordinate UAT, employee training and align technical delivery with organizational needs.</li>
+            <li>Partnered with executive leadership, business stakeholders, and IT teams to translate business needs into modernized enterprise solutions, leading application redesign and workflow automation to reduce reliance on manual and spreadsheet-based processes.</li>
+            <li>Built integrated automation platforms for federal compliance reporting, data management, and cross-functional team workflows by unifying data ingestion, processing, and visualization using PowerApps, Power Automate, Python, JavaScript, Selenium, SQL, Power BI, etc.</li>
+            <li>Engineered automated ETL and reporting pipelines on a dedicated computer node, reducing manual workloads by up to 85% while improving data accuracy and compliance reliability.</li>
+            <li>Developed executive Power BI dashboards delivering real-time performance metrics and operational insights.</li>
+            <li>Resolved high-impact system outages affecting enterprise data flows during server migration activities, restoring database and reporting services under time-sensitive conditions.</li>
+            <li>Resolved complex production issues across databases, reporting systems, automation frameworks, and enterprise application infrastructure in a production environment.</li>
+          </ul>
         </div>
 
-        <div class="row" data-aos="fade-up">
-          <div class="col-lg-12 d-flex justify-content-center">
-            <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">All</li>
-              <li data-filter=".filter-app">Data</li>
-              <li data-filter=".filter-card">Blockchain</li>
-              <li data-filter=".filter-web">Tech/QM/Coding</li>
+      </div>
+
+    </div>
+
+    <!-- ================= FULL WIDTH CENTERED PREVIOUS EXPERIENCE ================= -->
+    <div class="row">
+      <div class="col-12 d-flex justify-content-center">
+
+        <div style="max-width: 1000px; width: 100%;">
+
+          <h3 class="resume-title">Career History</h3>
+
+          <div class="resume-item">
+            <h4>Software Developer/Data Scientist</h4>
+            <h5>2019 - 2022</h5>
+            <p><em>Virginia Department of Behavioral Health (DBHDS)</em></p>
+            <ul>
+              <li>Managed and facilitated the Quality Assurance Performance Improvement (QAPI) program, leading cross-functional initiatives across clinical, administrative, and executive leadership teams.</li>
+              <li>Designed and executed data collection, analysis, and executive reporting frameworks used to justify a $1M+ increase in facility patient care funding.</li>
+              <li>Built enterprise Power BI analytics ecosystem including multi-dashboard architecture, KPI tracking systems, and data models supporting facility-wide decision-making.</li>
+              <li>Developed centralized QAPI database system and supporting data architecture integrating 20+ departmental data sources into a unified performance analytics platform.</li>
+              <li>Introduced enterprise BI adoption across the organization by developing and delivering Power BI training curriculum and promoting data-driven decision-making practices.</li>
+              <li>Implemented SQL-based backend data infrastructure and collaborated on HIPAA-compliant enterprise database design supporting secure healthcare data operations.</li>
+              <li>Improved operational outcomes including 64% reduction in medical record deficiencies, 37% increase in patient satisfaction, and 61% reduction in excessive overtime through data-driven interventions.</li>
+              <li>Recognized as a key contributor through the enterprise data systems and analytics framework I designed, which were cited throughout the Malcolm Baldrige Award evaluation for advancing data-driven performance improvement.</li>
             </ul>
           </div>
-        </div>
 
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/HomePortfolio/powerbi.gif" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/HomePortfolio/powerbicard.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" ><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details-PowerBI.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
+          <div class="resume-item">
+            <h4>Junior Software Developer</h4>
+            <h5>2018 - 2019</h5>
+            <p><em>Virginia Department of Behavioral Health (DBHDS)</em></p>
+            <ul>
+              <li>Supported HR and administrative systems by maintaining internal and external databases and developing reporting tools for workforce and operational data analysis.</li>
+              <li>Designed and developed proprietary HR database systems using Microsoft Access to improve data tracking, reporting efficiency, and departmental workflows.</li>
+              <li>Built and maintained Power BI dashboards analyzing staffing, vacancies, hiring pipelines, and employee demographics for executive reporting.</li>
+              <li>Served as technical liaison between HR and IT departments, ensuring data integrity, system reliability, and alignment of reporting requirements.</li>
+              <li>Produced complex data reports and analytical summaries for leadership to support operational decision-making and compliance needs.</li>
+              <li>Recognized by hospital leadership as lead technical resource for HR information systems and reporting infrastructure.</li>
+            </ul>
           </div>
 
-         <!--  <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/HomePortfolio/tech.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/HomePortfolio/techcard.png" data-gallery="portfolioGallery" class="portfolio-lightbox" ><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details-Tech.html" title="More Details"><i class="bx bx-link"></i>  </a>
-              </div>
-            </div>
-          </div> -->
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/HomePortfolio/sql.PNG" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/HomePortfolio/sqlcard.png" data-gallery="portfolioGallery" class="portfolio-lightbox" ><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details-SQL.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-      <!--     <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/HomePortfolio/wallet.PNG" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/HomePortfolio/cryptowalletcard.PNG" data-gallery="portfolioGallery" class="portfolio-lightbox" ><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details-Wallets.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div> -->
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/HomePortfolio/quality.PNG" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/HomePortfolio/qualitycard.png" data-gallery="portfolioGallery" class="portfolio-lightbox" ><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details-Quality.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/HomePortfolio/qapi.PNG" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/HomePortfolio/userinterfacescard.PNG" data-gallery="portfolioGallery" class="portfolio-lightbox" ><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details-QAPI.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <!-- <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/HomePortfolio/cardano.PNG" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/HomePortfolio/cardanocard.PNG" data-gallery="portfolioGallery" class="portfolio-lightbox" ><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details-Cardano.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div> -->
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/HomePortfolio/ethersolidity.PNG" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/HomePortfolio/ethercard.PNG" data-gallery="portfolioGallery" class="portfolio-lightbox" ><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details-Ethereum.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/HomePortfolio/coding.PNG" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/HomePortfolio/codingcard.png" data-gallery="portfolioGallery" class="portfolio-lightbox"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details-Coding.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
+          <div class="resume-item">
+            <h4>Stand Alone IT Business</h4>
+            <h5>2013 - 2022</h5>
+            <p><em>Brad Wilson IT Enterprises, West Point, VA</em></p>
+            <ul>
+              <li>Led end-to-end IT consulting projects including system architecture planning, hardware/software procurement, installation, configuration, and lifecycle maintenance.</li>
+              <li>Developed custom websites and client-facing applications using HTML, Bootstrap, JavaScript, and PHP for small business solutions.</li>
+              <li>Provided systems administration, troubleshooting, and optimization services across desktop and laptop environments including hardware repair and OS deployment.</li>
+              <li>Delivered technical consulting on software selection, workflow automation, and IT infrastructure improvements for private clients.</li>
+              <li>Conducted user training and implementation support for deployed systems, ensuring successful adoption and operational continuity.</li>
+            </ul>
           </div>
 
         </div>
-
       </div>
-    </section><!-- End Portfolio Section -->
+    </div>
+
+  </div>
+</section>
+
+    <!-- ======= Portfolio Section ======= -->
+<section id="portfolio" class="portfolio section-bg">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>Portfolio</h2>
+      <p>Please feel free to dive into my portfolio below. This showcases just some of the cool projects I have done throughout my career and college years as well!</p>
+    </div>
+
+    <div class="row" data-aos="fade-up">
+      <div class="col-lg-12 d-flex justify-content-center">
+        <ul id="portfolio-flters">
+          <li data-filter="*" class="filter-active">All</li>
+          <li data-filter=".filter-app">Coding</li>
+          <li data-filter=".filter-card">Performance Improvement</li>
+          <li data-filter=".filter-web">Enterprise Systems</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
+
+      <!-- Power BI -->
+      <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+        <a href="portfolio-details-PowerBI.html" style="display:block;">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/HomePortfolio/powerbi.gif" class="img-fluid" alt="Power BI">
+          </div>
+        </a>
+      </div>
+
+      <!-- SQL -->
+      <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+        <a href="portfolio-details-SQL.html" style="display:block;">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/HomePortfolio/sql.PNG" class="img-fluid" alt="SQL">
+          </div>
+        </a>
+      </div>
+
+      <!-- Quality -->
+      <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+        <a href="portfolio-details-Quality.html" style="display:block;">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/HomePortfolio/quality.PNG" class="img-fluid" alt="Quality">
+          </div>
+        </a>
+      </div>
+
+      <!-- Unity -->
+      <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+        <a href="portfolio-details-Unity.html" style="display:block;">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/HomePortfolio/UnityICO2.png" class="img-fluid" alt="Unity">
+          </div>
+        </a>
+      </div>
+
+      <!-- QAPI -->
+      <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+        <a href="portfolio-details-QAPI.html" style="display:block;">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/HomePortfolio/qapi.PNG" class="img-fluid" alt="QAPI">
+          </div>
+        </a>
+      </div>
+
+      <!-- Coding -->
+      <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+        <a href="portfolio-details-Coding.html" style="display:block;">
+          <div class="portfolio-wrap">
+            <img src="assets/img/portfolio/HomePortfolio/coding.PNG" class="img-fluid" alt="Coding">
+          </div>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+<!-- End Portfolio Section -->
 
     <!-- ======= Services Section ======= -->
     <section id="services" class="services">
       <div class="container">
 
         <div class="section-title">
-          <h2>Services</h2>
-          <p>All of my services offered below can pertain to any freelance work or professional job duties requested. Please contact me by email for any specific inquiries.</p>
+          <h2>Professional Skills</h2>
+          <p>All of my skills below can pertain to any professional job duties requested. </p>
         </div>
 
         <div class="row">
@@ -555,75 +652,134 @@
       </div>
     </section><!-- End Testimonials Section -->
 
+
     <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
-      <div class="container">
+<section id="contact" class="bwx-contact-space">
 
-        <div class="section-title">
-          <h2>Contact</h2>
-          <p>Please feel free to contact me directly for any inquiries or job offers. I currently work from 6:30 am - 3:00 pm M-F, and I am available mostly in the afternoon going into the evening.</p>
-        </div>
+  <canvas id="bwx-blackhole-canvas" aria-hidden="true"></canvas>
 
-        <div class="row" data-aos="fade-in">
+  <div class="bwx-contact-container">
 
-          <div class="col-lg-5 d-flex align-items-stretch">
-            <div class="info">
-              <div class="address">
-                <i class="bi bi-geo-alt"></i>
-                <h4>Location:</h4>
-                <p>370 Thompson Ave. West Point VA 23181</p>
-              </div>
+    <!-- Contact Header -->
+    <div class="bwx-contact-copy">
 
-              <div class="email">
-                <i class="bi bi-envelope"></i>
-                <h4>Email:</h4>
-                <p>wilsonbk2@vcu.edu</p>
-              </div>
+      <!-- <div class="bwx-contact-kicker">
+        <span class="bwx-contact-kicker-dot"></span>
+        OPEN TRANSMISSION CHANNEL
+      </div> -->
 
-              <div class="phone">
-                <i class="bi bi-phone"></i>
-                <h4>Call:</h4>
-                <p>+1 804 572 0583</p>
-              </div>
+      <h2 class="bwx-contact-heading">
+        Let's Connect.
+      </h2>
 
-              <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>-->
+      <p class="bwx-contact-description">
+        Please feel free to contact me directly for any inquiries or job offers.
+        I currently work from 6:30 am - 3:00 pm M-F, and I am available mostly
+        in the afternoon going into the evening.
+      </p>
+
+    </div>
+
+
+    <!-- Main Contact Scene -->
+    <div class="bwx-contact-scene">
+
+      <!-- Floating Contact Module -->
+      <div class="bwx-contact-module">
+
+        <div class="bwx-contact-ring bwx-contact-ring-a"></div>
+        <div class="bwx-contact-ring bwx-contact-ring-b"></div>
+        <div class="bwx-contact-ring bwx-contact-ring-c"></div>
+
+        <div class="bwx-contact-card">
+
+          <div class="bwx-contact-card-header">
+            <span class="bwx-contact-status"></span>
+            <span>COMMUNICATION NODE</span>
+          </div>
+
+          <div class="bwx-contact-line"></div>
+
+
+          <!-- Location -->
+          <div class="bwx-contact-item">
+
+            <div class="bwx-contact-icon">
+              <i class="bi bi-geo-alt"></i>
+            </div>
+
+            <div class="bwx-contact-item-content">
+              <span>LOCATION</span>
+              <p>P.O. Box 528 Quinton VA 23141</p>
             </div>
 
           </div>
 
-         <!-- <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-              <div class="row">
-                <div class="form-group col-md-6">
-                  <label for="name">Your Name</label>
-                  <input type="text" name="name" class="form-control" id="name" required>
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="name">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="name">Subject</label>
-                <input type="text" class="form-control" name="subject" id="subject" required>
-              </div>
-              <div class="form-group">
-                <label for="name">Message</label>
-                <textarea class="form-control" name="message" rows="10" required></textarea>
-              </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
-            </form>
-          </div> -->
+
+          <!-- Email -->
+          <div class="bwx-contact-item">
+
+            <div class="bwx-contact-icon">
+              <i class="bi bi-envelope"></i>
+            </div>
+
+            <div class="bwx-contact-item-content">
+              <span>EMAIL</span>
+              <p>wilsonbk2@vcu.edu</p>
+            </div>
+
+          </div>
+
+
+          <!-- Phone -->
+          <div class="bwx-contact-item">
+
+            <div class="bwx-contact-icon">
+              <i class="bi bi-phone"></i>
+            </div>
+
+            <div class="bwx-contact-item-content">
+              <span>PHONE</span>
+              <p>+1 804 572 0583</p>
+            </div>
+
+          </div>
+
+
+          <div class="bwx-contact-line bwx-contact-line-bottom"></div>
+
+
+          <!-- Footer -->
+          <div class="bwx-contact-footer">
+
+            <span>TRANSMISSION CHANNEL</span>
+
+            <span class="bwx-contact-pulse">
+              <span>●</span> ONLINE
+            </span>
+
+          </div>
 
         </div>
 
       </div>
-    </section><!-- End Contact Section -->
+
+
+      <!-- Black Hole Information -->
+      <div class="bwx-blackhole-label">
+
+        <span>GRAVITATIONAL ANOMALY</span>
+
+        <strong>BH-01</strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<!-- End Contact Section -->
 
   </main><!-- End #main -->
 
@@ -634,11 +790,6 @@
         <!-- &copy; <strong><span></span></strong> -->
       </div>
       <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/ -->
-       <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>-->
       </div>
     </div>
   </footer><!-- End  Footer -->
@@ -646,6 +797,9 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
+  <script src="assets/js/bwx-blackhole.js"></script>
+  <script src="assets/js/bmx-orbit-chat.js"></script>
+  <script src="assets/js/bwx-orbit-space.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
