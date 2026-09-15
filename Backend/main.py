@@ -134,7 +134,7 @@ Source Code:
     site_origin = http_request.headers.get("origin")
 
     if not site_origin or site_origin == "null":
-        site_origin = "file:///G:/TECH%20ENDEAVORS/Brad%20Wilson%20Website"
+        site_origin = "https://wilsonbk2.github.io/BradWilsonITProfessional"
 
 
     # Build the full URL for every portfolio page
