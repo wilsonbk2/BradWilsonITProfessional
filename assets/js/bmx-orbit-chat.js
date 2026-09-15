@@ -295,7 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const response =
                 await fetch(
-                    "/api/chat",
+                    "https://bradwilsonitprofessional-six.vercel.app/api/chat",
                     {
                         method: "POST",
 
