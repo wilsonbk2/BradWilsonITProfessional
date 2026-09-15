@@ -8,7 +8,7 @@ PORTFOLIO_ROOT = Path(__file__).resolve().parent.parent
 
 
 PORTFOLIO_PAGES = [
-    "index2026.html",
+    "index.html",
     "portfolio-details-PowerBI.html",
     "portfolio-details-SQL.html",
     "portfolio-details-Quality.html",
