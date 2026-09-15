@@ -28,20 +28,20 @@ portfolio_knowledge = load_portfolio_knowledge()
 
 
 # Find all GitHub repositories referenced by the portfolio
-github_projects = []
+# github_projects = []
 
-for page in portfolio_knowledge:
+# for page in portfolio_knowledge:
 
-    for project in page["github_projects"]:
+#     for project in page["github_projects"]:
 
-        if project not in github_projects:
-            github_projects.append(project)
+#         if project not in github_projects:
+#             github_projects.append(project)
 
 
 # Load GitHub source code
-github_knowledge = load_github_knowledge(
-    github_projects
-)
+github_knowledge = load_github_knowledge()
+#     github_projects
+# )
 
 
 def build_knowledge_context():
