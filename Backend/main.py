@@ -131,10 +131,8 @@ Source Code:
 
 
     # Determine the website currently being used
-    site_origin = http_request.headers.get("origin")
-
-    if not site_origin or site_origin == "null":
-        site_origin = "https://wilsonbk2.github.io/BradWilsonITProfessional"
+    # GitHub Pages site URL
+    site_origin = "https://wilsonbk2.github.io/BradWilsonITProfessional"
 
 
     # Build the full URL for every portfolio page
