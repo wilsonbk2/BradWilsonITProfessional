@@ -21,9 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const config = {
-        stars: 1800,
+        stars: 1200,
         galaxyStars: 2600,
-        nebulaParticles: 500,
+        nebulaParticles: 250,
         galaxyRotationSpeed: 0.00035
     };
 
@@ -484,7 +484,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    function bwxDrawShootingStars() {
+    function bwxDrawShootingStars(deltaTime) {
 
         for (
             let i = shootingStars.length - 1;
@@ -495,10 +495,16 @@ document.addEventListener("DOMContentLoaded", () => {
             const star =
                 shootingStars[i];
 
-            star.x -= star.speed;
-            star.y += star.speed * 0.65;
-
-            star.life++;
+            const frameScale =
+                deltaTime / 16.6667;
+            
+            star.x -=
+                star.speed * frameScale;
+            
+            star.y +=
+                star.speed * 0.65 * frameScale;
+            
+            star.life += frameScale;
 
             const alpha =
                 1 -
@@ -603,31 +609,50 @@ document.addEventListener("DOMContentLoaded", () => {
     /* =========================================
        MAIN LOOP
     ========================================= */
-
+    
+    const bwxFrameInterval = 1000 / 30;
+    
     function bwxAnimateSpace(time) {
-
+    
+        if (!bwxLastAnimationTime) {
+            bwxLastAnimationTime = time;
+        }
+    
+        const deltaTime =
+            time - bwxLastAnimationTime;
+    
+        if (deltaTime < bwxFrameInterval) {
+    
+            requestAnimationFrame(
+                bwxAnimateSpace
+            );
+    
+            return;
+        }
+    
+        bwxLastAnimationTime = time;
+    
         ctx.clearRect(
             0,
             0,
             width,
             height
         );
-
+    
         bwxDrawBackground();
-
+    
         bwxDrawNebula(time);
-
+    
         bwxDrawStars(time);
-
-        bwxDrawGalaxy();
-
-        bwxDrawShootingStars();
-
+    
+        bwxDrawGalaxy(deltaTime);
+    
+        bwxDrawShootingStars(deltaTime);
+    
         requestAnimationFrame(
             bwxAnimateSpace
         );
     }
-
 
     /* =========================================
        START
