@@ -608,53 +608,83 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 
-    /* =========================================
-       MAIN LOOP
-    ========================================= */
+        /* =========================================
+           MAIN LOOP
+        ========================================= */
     
-    const bwxFrameInterval = 1000 / 30;
+        const bwxFrameInterval = 1000 / 30;
     
-    function bwxAnimateSpace(time) {
+        let bwxPreviousFrameTime = 0;
+        let bwxAnimationTime = 0;
     
-        if (!bwxLastAnimationTime) {
-            bwxLastAnimationTime = time;
-        }
+        function bwxAnimateSpace(time) {
     
-        const deltaTime =
-            time - bwxLastAnimationTime;
+            if (!bwxPreviousFrameTime) {
     
-        if (deltaTime < bwxFrameInterval) {
+                bwxPreviousFrameTime = time;
+    
+                requestAnimationFrame(
+                    bwxAnimateSpace
+                );
+    
+                return;
+            }
+    
+            const deltaTime =
+                time - bwxPreviousFrameTime;
+    
+            /*
+                Limit rendering to approximately 30 FPS.
+            */
+    
+            if (deltaTime < bwxFrameInterval) {
+    
+                requestAnimationFrame(
+                    bwxAnimateSpace
+                );
+    
+                return;
+            }
+    
+            /*
+                Advance animation using REAL elapsed time.
+                This keeps movement consistent even though
+                we are rendering fewer frames.
+            */
+    
+            bwxPreviousFrameTime = time;
+    
+            bwxAnimationTime += deltaTime;
+    
+            ctx.clearRect(
+                0,
+                0,
+                width,
+                height
+            );
+    
+            bwxDrawBackground();
+    
+            bwxDrawNebula(
+                bwxAnimationTime
+            );
+    
+            bwxDrawStars(
+                bwxAnimationTime
+            );
+    
+            bwxDrawGalaxy(
+                deltaTime
+            );
+    
+            bwxDrawShootingStars(
+                deltaTime
+            );
     
             requestAnimationFrame(
                 bwxAnimateSpace
             );
-    
-            return;
         }
-    
-        bwxLastAnimationTime = time;
-    
-        ctx.clearRect(
-            0,
-            0,
-            width,
-            height
-        );
-    
-        bwxDrawBackground();
-    
-        bwxDrawNebula(time);
-    
-        bwxDrawStars(time);
-    
-        bwxDrawGalaxy(deltaTime);
-    
-        bwxDrawShootingStars(deltaTime);
-    
-        requestAnimationFrame(
-            bwxAnimateSpace
-        );
-    }
 
     /* =========================================
        START
