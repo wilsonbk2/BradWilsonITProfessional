@@ -315,11 +315,13 @@ document.addEventListener("DOMContentLoaded", () => {
     ========================================= */
 
     let galaxyRotation = 0;
+    let bwxLastAnimationTime = 0;
 
-    function bwxDrawGalaxy() {
+    function bwxDrawGalaxy(deltaTime) {
 
         galaxyRotation +=
-            config.galaxyRotationSpeed;
+            config.galaxyRotationSpeed *
+            (deltaTime / 16.6667);
 
         const galaxyX =
             width * 0.82 +
