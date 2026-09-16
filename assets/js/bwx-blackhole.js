@@ -72,7 +72,7 @@
   const TARGET_FPS = 30;
   const FRAME_INTERVAL = 1000 / TARGET_FPS;
 
-
+  let isVisible = true;
 
   /*
    * When the Contact section is outside the viewport,
@@ -1840,6 +1840,16 @@
 
   function animate(now) {
 
+  if (!isVisible) {
+
+    requestAnimationFrame(
+      animate
+    );
+
+    return;
+  }
+
+
   if (
     now - lastFrameTime <
     FRAME_INTERVAL
@@ -1851,6 +1861,8 @@
 
     return;
   }
+
+  // everything else stays exactly the same
 
   const elapsed =
     now - lastFrameTime;
@@ -1881,13 +1893,51 @@
 }
 
   /* =======================================================
-     EVENTS
-     ======================================================= */
+   EVENTS
+   ======================================================= */
 
-  window.addEventListener(
-    "resize",
-    resize
-  );
+function checkVisibility() {
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+  isVisible =
+    rect.bottom > 0 &&
+    rect.top < window.innerHeight;
+}
+
+
+window.addEventListener(
+  "resize",
+  () => {
+
+    resize();
+    checkVisibility();
+
+  }
+);
+
+
+window.addEventListener(
+  "scroll",
+  checkVisibility,
+  {
+    passive: true
+  }
+);
+
+
+/* =======================================================
+   INIT
+   ======================================================= */
+
+resize();
+
+checkVisibility();
+
+requestAnimationFrame(
+  animate
+);
 
 
   /* =======================================================
