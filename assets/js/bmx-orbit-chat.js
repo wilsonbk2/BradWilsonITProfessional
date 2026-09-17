@@ -416,7 +416,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const data =
                 await response.json();
 
-
+            bwxHideStatus();
+            
             bwxAddMessage(
                 data.response,
                 "ai"
@@ -429,7 +430,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Wilson AI error:",
                 error
             );
-
+            
+            bwxHideStatus();
 
             bwxAddMessage(
                 "I couldn't connect to the AI backend.",
