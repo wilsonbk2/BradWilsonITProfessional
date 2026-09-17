@@ -403,7 +403,115 @@
 
     border: 1px solid rgba(255,255,255,.08);
 }
+/* ================================
+   AI THINKING STATUS
+================================ */
 
+.bwx-orbit-thinking-status {
+
+    display: flex;
+    align-items: center;
+
+    width: fit-content;
+
+    margin: 8px 0 10px;
+
+    padding: 7px 11px;
+
+    border: 1px solid rgba(130, 175, 255, .10);
+
+    border-radius: 10px;
+
+    background: rgba(90, 130, 210, .035);
+
+    color: rgba(190, 215, 250, .48);
+
+    font-family: monospace;
+    font-size: 9px;
+
+    letter-spacing: 1.3px;
+
+    animation: bwxThinkingFadeIn .3s ease;
+}
+
+
+.bwx-orbit-thinking-icon {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 15px;
+    height: 15px;
+
+    margin-right: 8px;
+
+    color: rgba(150, 195, 255, .72);
+
+    animation: bwxThinkingPulse 1.5s ease-in-out infinite;
+}
+
+
+.bwx-orbit-thinking-icon svg {
+
+    width: 14px;
+    height: 14px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.5;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+
+/* GitHub logo uses its filled shape */
+
+.bwx-orbit-thinking-icon svg path[fill="currentColor"] {
+
+    fill: currentColor;
+
+    stroke: none;
+}
+
+
+.bwx-orbit-thinking-text {
+
+    white-space: nowrap;
+}
+
+
+@keyframes bwxThinkingPulse {
+
+    0%,
+    100% {
+        opacity: .45;
+        transform: scale(.9);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.08);
+    }
+}
+
+
+@keyframes bwxThinkingFadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(3px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 /* ================================
    INPUT
