@@ -415,8 +415,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const data =
                 await response.json();
-
-            bwxHideStatus();
+            
+            const thinkingStatus =
+                document.getElementById(
+                    "bwxOrbitThinkingStatus"
+                );
+            
+            if (thinkingStatus) {
+                thinkingStatus.remove();
+            }
             
             bwxAddMessage(
                 data.response,
