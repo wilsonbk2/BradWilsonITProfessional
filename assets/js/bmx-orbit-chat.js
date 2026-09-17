@@ -288,14 +288,27 @@ document.addEventListener("DOMContentLoaded", () => {
     */
     
     function bwxShowStatus(type, text) {
+
+        let status =
+            document.getElementById("bwxOrbitThinkingStatus");
     
-        bwxHideStatus();
+        /*
+        If the status already exists, update it
+        instead of creating another one.
+        */
+        if (!status) {
     
-        const status =
-            document.createElement("div");
+            status =
+                document.createElement("div");
     
-        status.id = "bwxOrbitThinkingStatus";
-        status.className = "bwx-orbit-thinking-status";
+            status.id =
+                "bwxOrbitThinkingStatus";
+    
+            status.className =
+                "bwx-orbit-thinking-status";
+    
+            bwxConversation.appendChild(status);
+        }
     
         let icon = "";
     
@@ -358,8 +371,6 @@ document.addEventListener("DOMContentLoaded", () => {
             </span>
         `;
     
-        bwxConversation.appendChild(status);
-    
         bwxConversation.scrollTop =
             bwxConversation.scrollHeight;
     }
@@ -372,9 +383,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 "bwxOrbitThinkingStatus"
             );
     
-        if (status) {
-            status.remove();
+        if (!status) {
+            return;
         }
+    
+        status.parentNode.removeChild(status);
     }
     /*
     =========================================================
@@ -386,67 +399,57 @@ document.addEventListener("DOMContentLoaded", () => {
     async function bwxGetAIResponse(question) {
 
         try {
-
+    
             const response =
                 await fetch(
                     "https://bradwilsonitprofessional-six.vercel.app/api/chat",
                     {
                         method: "POST",
-
+    
                         headers: {
                             "Content-Type":
                                 "application/json"
                         },
-
+    
                         body: JSON.stringify({
                             message: question
                         })
                     }
                 );
-
-
+    
             if (!response.ok) {
-
+    
                 throw new Error(
                     `Server error: ${response.status}`
                 );
             }
-
-
+    
             const data =
                 await response.json();
-            
-            const thinkingStatus =
-                document.getElementById(
-                    "bwxOrbitThinkingStatus"
-                );
-            
-            if (thinkingStatus) {
-                thinkingStatus.remove();
-            }
-            
+    
             bwxAddMessage(
                 data.response,
                 "ai"
             );
-
-
+    
         } catch (error) {
-
+    
             console.error(
                 "Wilson AI error:",
                 error
             );
-            
-            bwxHideStatus();
-
+    
             bwxAddMessage(
                 "I couldn't connect to the AI backend.",
                 "ai"
             );
+    
+        } finally {
+    
+            bwxHideStatus();
+    
         }
     }
-
 
     /*
     =========================================================
