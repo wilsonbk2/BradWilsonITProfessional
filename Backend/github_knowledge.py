@@ -1,4 +1,3 @@
-```python
 import os
 from pathlib import Path
 import base64
@@ -19,7 +18,7 @@ ALLOWED_EXTENSIONS = {
     ".py", ".js", ".jsx", ".ts", ".tsx", ".html", ".css", ".sql",
     ".json", ".xml", ".yaml", ".yml", ".md", ".txt", ".ps1", ".bat",
     ".sh", ".cs", ".java", ".cpp", ".c", ".h", ".hpp", ".vb", ".vbs",
-    ".vba", ".sol", ".fx",
+    ".vba", ".sol", ".fx", ".hta",
 }
 
 IGNORED_NAMES = {
@@ -880,4 +879,3 @@ if __name__ == "__main__":
                 result["repository"],
                 result["path"]
             )
-```
