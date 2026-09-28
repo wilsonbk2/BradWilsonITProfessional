@@ -104,7 +104,7 @@ def chat(request: ChatRequest, http_request: Request):
         if len(word) > 3
     ]
 
-    relevant_code = search_github_knowledge(
+    relevant_code = get_relevant_github_files(
         github_knowledge,
         search_terms,
         max_results=5
