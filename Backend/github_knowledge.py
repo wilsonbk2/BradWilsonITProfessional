@@ -1,49 +1,24 @@
 import os
-from github import Github
 from pathlib import Path
 import base64
 
+from github import Github
+
 
 # ============================================================
-# SETTINGS
+# CONFIGURATION
 # ============================================================
 
 EXCLUDED_REPOSITORIES = {
     "wilsonbk2/BradWilsonITProfessional",
 }
 
-
 ALLOWED_EXTENSIONS = {
-    ".py",
-    ".js",
-    ".jsx",
-    ".ts",
-    ".tsx",
-    ".html",
-    ".css",
-    ".sql",
-    ".json",
-    ".xml",
-    ".yaml",
-    ".yml",
-    ".md",
-    ".txt",
-    ".ps1",
-    ".bat",
-    ".sh",
-    ".cs",
-    ".java",
-    ".cpp",
-    ".c",
-    ".h",
-    ".hpp",
-    ".vb",
-    ".vbs",
-    ".vba",
-    ".sol",
-    ".fx",
+    ".py", ".js", ".jsx", ".ts", ".tsx", ".html", ".css", ".sql",
+    ".json", ".xml", ".yaml", ".yml", ".md", ".txt", ".ps1", ".bat",
+    ".sh", ".cs", ".java", ".cpp", ".c", ".h", ".hpp", ".vb", ".vbs",
+    ".vba", ".sol", ".fx", ".cls", ".bas",
 }
-
 
 IGNORED_NAMES = {
     ".git",
@@ -57,37 +32,29 @@ IGNORED_NAMES = {
 }
 
 
-# ============================================================
-# GITHUB CONNECTION
-# ============================================================
-
-github = Github(
-    os.getenv("GITHUB_TOKEN")
-)
+# Maximum source size retrieved for an individual file.
+# This prevents one enormous file from consuming the entire prompt.
+MAX_FILE_SIZE = 500_000
 
 
+github = Github(os.getenv("GITHUB_TOKEN"))
+
+
 # ============================================================
-# GET REPOSITORY
+# GITHUB HELPERS
 # ============================================================
 
 def get_repository(repository_name):
-
     if repository_name in EXCLUDED_REPOSITORIES:
         return None
 
     return github.get_repo(repository_name)
 
 
-# ============================================================
-# SHOULD INCLUDE FILE?
-# ============================================================
-
 def should_include_file(path):
-
     path_object = Path(path)
 
     for part in path_object.parts:
-
         if part in IGNORED_NAMES:
             return False
 
@@ -98,10 +65,19 @@ def should_include_file(path):
 
 
 # ============================================================
-# GET REPOSITORY FILES
+# BUILD LIGHTWEIGHT FILE INDEX
 # ============================================================
 
-def get_repository_files(repository_name, branch=None):
+def get_repository_file_index(repository_name, branch=None):
+    """
+    Build a lightweight index of repository files.
+
+    IMPORTANT:
+    This does NOT download the contents of every file.
+
+    We only store metadata needed to determine which files
+    are relevant to a user's question later.
+    """
 
     repo = get_repository(repository_name)
 
@@ -112,7 +88,7 @@ def get_repository_files(repository_name, branch=None):
         branch = repo.default_branch
 
     print()
-    print(f"Retrieving repository: {repository_name}")
+    print(f"Indexing repository: {repository_name}")
     print(f"Branch: {branch}")
 
     tree = repo.get_git_tree(
@@ -130,142 +106,101 @@ def get_repository_files(repository_name, branch=None):
         if not should_include_file(item.path):
             continue
 
-        try:
+        path_object = Path(item.path)
 
-            blob = repo.get_git_blob(item.sha)
+        files.append({
+            "repository": repository_name,
+            "branch": branch,
+            "path": item.path,
+            "extension": path_object.suffix.lower(),
+            "sha": item.sha,
+            "size": getattr(item, "size", 0),
+        })
 
-            decoded_bytes = base64.b64decode(
-                blob.content
-            )
-
-            content = decoded_bytes.decode(
-                "utf-8",
-                errors="ignore"
-            )
-
-            files.append({
-                "repository": repository_name,
-                "branch": branch,
-                "path": item.path,
-                "content": content
-            })
-
-            print(f"  Loaded: {item.path}")
-
-        except Exception as error:
-
-            print(
-                f"  Could not load "
-                f"{item.path}: {error}"
-            )
+    print(
+        f"  Indexed {len(files)} files "
+        f"from {repository_name}"
+    )
 
     return files
 
 
-# ============================================================
-# LOAD ALL GITHUB KNOWLEDGE
-# ============================================================
 def load_github_knowledge():
+    """
+    Build the GitHub knowledge index.
+
+    This intentionally does NOT download source code.
+
+    The resulting structure is small enough to keep in memory
+    and can scale to a much larger GitHub archive.
+    """
 
     knowledge = []
 
     print()
     print("=" * 80)
-    print("DISCOVERING GITHUB REPOSITORIES")
+    print("BUILDING GITHUB FILE INDEX")
     print("=" * 80)
 
     user = github.get_user()
 
-    repositories = user.get_repos(
-        type="all"
-    )
+    repositories = user.get_repos(type="all")
 
     for repo in repositories:
 
         repository_name = repo.full_name
 
         if repository_name in EXCLUDED_REPOSITORIES:
-
             print(
                 f"\nSkipping excluded repository: "
                 f"{repository_name}"
             )
-
             continue
 
         branch = repo.default_branch
 
-        print(
-            f"\nLoading repository: "
-            f"{repository_name}"
-        )
-
-        files = get_repository_files(
+        files = get_repository_file_index(
             repository_name,
             branch
         )
 
         knowledge.extend(files)
 
+    print()
+    print("=" * 80)
+    print(
+        f"GITHUB INDEX COMPLETE: "
+        f"{len(knowledge)} files"
+    )
+    print("=" * 80)
+
     return knowledge
-    
-# def load_github_knowledge(github_projects):
-
-#     knowledge = []
-
-#     processed_repositories = set()
-
-#     for project in github_projects:
-
-#         repository = project.get("repository")
-#         branch = project.get("branch")
-
-#         if not repository:
-#             continue
-
-#         if repository in EXCLUDED_REPOSITORIES:
-
-#             print(
-#                 f"\nSkipping excluded repository: "
-#                 f"{repository}"
-#             )
-
-#             continue
-
-#         if repository in processed_repositories:
-#             continue
-
-#         processed_repositories.add(repository)
-
-#         files = get_repository_files(
-#             repository,
-#             branch
-#         )
-
-#         knowledge.extend(files)
-
-#     return knowledge
 
 
 # ============================================================
-# SEARCH GITHUB KNOWLEDGE
+# SEARCH FILE INDEX
 # ============================================================
 
 def search_github_knowledge(
     github_knowledge,
     search_terms,
-    max_results=8
+    max_results=5
 ):
     """
-    Search loaded GitHub source code for relevant files.
+    Search the lightweight GitHub file index.
 
-    search_terms should be a list of words or phrases.
+    No source code is downloaded during this operation.
+
+    Relevance is determined from:
+        - filename
+        - directory path
+        - repository name
+        - file extension
     """
 
     if not search_terms:
         return []
 
-    # Normalize search terms.
     terms = []
 
     for term in search_terms:
@@ -279,21 +214,31 @@ def search_github_knowledge(
 
     for file in github_knowledge:
 
+        repository = file["repository"].lower()
         path = file["path"].lower()
-        content = file["content"].lower()
+        extension = file["extension"].lower()
+
+        filename = Path(path).name.lower()
 
         score = 0
 
-        # Filename matches are highly useful.
         for term in terms:
 
+            # Strongest match: filename
+            if term in filename:
+                score += 25
+
+            # Strong match: path
             if term in path:
+                score += 15
+
+            # Repository match
+            if term in repository:
                 score += 10
 
-        # Count occurrences inside the actual code.
-        for term in terms:
-
-            score += content.count(term)
+            # Extension match
+            if term == extension:
+                score += 5
 
         if score == 0:
             continue
@@ -302,11 +247,12 @@ def search_github_knowledge(
             "repository": file["repository"],
             "branch": file["branch"],
             "path": file["path"],
-            "content": file["content"],
-            "score": score
+            "extension": file["extension"],
+            "sha": file["sha"],
+            "size": file["size"],
+            "score": score,
         })
 
-    # Highest relevance first.
     results.sort(
         key=lambda item: item["score"],
         reverse=True
@@ -316,111 +262,132 @@ def search_github_knowledge(
 
 
 # ============================================================
-# TEST
+# RETRIEVE ACTUAL FILE CONTENT
+# ============================================================
+
+def load_file_content(file):
+    """
+    Retrieve the actual source code for a file after it has
+    been selected as relevant.
+
+    GitHub remains the source of truth.
+    """
+
+    try:
+
+        repo = get_repository(
+            file["repository"]
+        )
+
+        if repo is None:
+            return None
+
+        # Protect the backend from extremely large files.
+        if file["size"] and file["size"] > MAX_FILE_SIZE:
+
+            print(
+                f"Skipping oversized file: "
+                f"{file['path']} "
+                f"({file['size']} bytes)"
+            )
+
+            return None
+
+        blob = repo.get_git_blob(
+            file["sha"]
+        )
+
+        decoded_bytes = base64.b64decode(
+            blob.content
+        )
+
+        content = decoded_bytes.decode(
+            "utf-8",
+            errors="ignore"
+        )
+
+        return {
+            "repository": file["repository"],
+            "branch": file["branch"],
+            "path": file["path"],
+            "content": content,
+            "score": file["score"],
+        }
+
+    except Exception as error:
+
+        print(
+            f"Could not retrieve "
+            f"{file['repository']}/"
+            f"{file['path']}: "
+            f"{error}"
+        )
+
+        return None
+
+
+def get_relevant_github_files(
+    github_knowledge,
+    search_terms,
+    max_results=5
+):
+    """
+    Search the lightweight index and then retrieve the actual
+    contents of only the most relevant files.
+    """
+
+    matching_files = search_github_knowledge(
+        github_knowledge,
+        search_terms,
+        max_results=max_results
+    )
+
+    relevant_files = []
+
+    for file in matching_files:
+
+        content = load_file_content(file)
+
+        if content is None:
+            continue
+
+        relevant_files.append(content)
+
+    return relevant_files
+
+
+# ============================================================
+# LOCAL TEST
 # ============================================================
 
 if __name__ == "__main__":
 
-    from portfolio_knowledge import load_portfolio_knowledge
-
-    portfolio = load_portfolio_knowledge()
-
-    github_projects = []
-
-    for page in portfolio:
-
-        for project in page["github_projects"]:
-
-            if project not in github_projects:
-                github_projects.append(project)
+    knowledge = load_github_knowledge()
 
     print()
-    print("=" * 80)
-    print("DISCOVERED GITHUB REPOSITORIES")
-    print("=" * 80)
-
-    for project in github_projects:
-
-        print(
-            f"{project['repository']} "
-            f"({project['branch']})"
-        )
-
-    github_knowledge = load_github_knowledge(
-        github_projects
-    )
-
-    print()
-    print("=" * 80)
-    print("GITHUB KNOWLEDGE SUMMARY")
-    print("=" * 80)
-
-    repositories = set(
-        file["repository"]
-        for file in github_knowledge
-    )
-
     print(
-        f"Repositories found: "
-        f"{len(repositories)}"
+        f"Total indexed files: "
+        f"{len(knowledge)}"
     )
 
-    print(
-        f"Files loaded: "
-        f"{len(github_knowledge)}"
-    )
-
-    # --------------------------------------------------------
-    # TEST SEARCH
-    # --------------------------------------------------------
-
-    print()
-    print("=" * 80)
-    print("TESTING CODE SEARCH")
-    print("=" * 80)
-
-    search_terms = [
+    test_terms = [
         "database",
         "sql",
-        "python"
+        "employee",
     ]
 
-    results = search_github_knowledge(
-        github_knowledge,
-        search_terms
+    results = get_relevant_github_files(
+        knowledge,
+        test_terms,
+        max_results=5
     )
 
     print()
-    print(
-        f"Search terms: {search_terms}"
-    )
-
-    print(
-        f"Relevant files found: {len(results)}"
-    )
+    print("Relevant files:")
 
     for result in results:
 
-        print()
-        print("-" * 80)
-
         print(
-            f"Score: {result['score']}"
-        )
-
-        print(
-            f"Repository: "
-            f"{result['repository']}"
-        )
-
-        print(
-            f"File: "
+            f"- {result['repository']}/"
             f"{result['path']}"
-        )
-
-        print("-" * 80)
-
-        # Only show the beginning during testing.
-        print(
-            result["content"][:500]
         )
