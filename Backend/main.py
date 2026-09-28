@@ -7,9 +7,8 @@ from Backend.portfolio_knowledge import load_portfolio_knowledge
 
 from Backend.github_knowledge import (
     load_github_knowledge,
-    search_github_knowledge
+    get_relevant_github_files
 )
-
 
 app = FastAPI()
 
