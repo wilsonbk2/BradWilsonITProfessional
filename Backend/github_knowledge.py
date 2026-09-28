@@ -1,6 +1,8 @@
+```python
 import os
 from pathlib import Path
 import base64
+import re
 
 from github import Github
 
@@ -17,7 +19,7 @@ ALLOWED_EXTENSIONS = {
     ".py", ".js", ".jsx", ".ts", ".tsx", ".html", ".css", ".sql",
     ".json", ".xml", ".yaml", ".yml", ".md", ".txt", ".ps1", ".bat",
     ".sh", ".cs", ".java", ".cpp", ".c", ".h", ".hpp", ".vb", ".vbs",
-    ".vba", ".sol", ".fx", ".cls", ".bas",
+    ".vba", ".sol", ".fx",
 }
 
 IGNORED_NAMES = {
@@ -32,8 +34,7 @@ IGNORED_NAMES = {
 }
 
 
-# Maximum source size retrieved for an individual file.
-# This prevents one enormous file from consuming the entire prompt.
+# Maximum source size retrieved for one file.
 MAX_FILE_SIZE = 500_000
 
 
@@ -41,10 +42,276 @@ github = Github(os.getenv("GITHUB_TOKEN"))
 
 
 # ============================================================
+# TECHNICAL CONCEPTS
+# ============================================================
+#
+# These aliases help connect natural-language questions to
+# technical terms that may appear in repository/file names.
+#
+# This is intentionally lightweight. It does not require an AI
+# call or external vector database.
+# ============================================================
+
+CONCEPT_ALIASES = {
+
+    "database": {
+        "database",
+        "databases",
+        "db",
+        "sql",
+        "schema",
+        "table",
+        "tables",
+        "query",
+        "queries",
+        "relational",
+        "data",
+        "datastore",
+        "backend",
+    },
+
+    "sql": {
+        "sql",
+        "query",
+        "queries",
+        "stored",
+        "procedure",
+        "procedures",
+        "join",
+        "joins",
+        "select",
+        "insert",
+        "update",
+        "delete",
+        "cte",
+        "database",
+    },
+
+    "automation": {
+        "automation",
+        "automated",
+        "automation-webscraping",
+        "selenium",
+        "scraping",
+        "webscraping",
+        "workflow",
+        "workflows",
+        "bot",
+        "script",
+        "scripts",
+    },
+
+    "python": {
+        "python",
+        "py",
+        "fastapi",
+        "flask",
+        "selenium",
+        "pandas",
+        "automation",
+        "script",
+        "scripts",
+    },
+
+    "powerbi": {
+        "powerbi",
+        "power",
+        "bi",
+        "dashboard",
+        "dashboards",
+        "report",
+        "reports",
+        "visualization",
+        "visualizations",
+        "analytics",
+    },
+
+    "access": {
+        "access",
+        "vba",
+        "visual",
+        "basic",
+        "macro",
+        "macros",
+        "form",
+        "forms",
+        "query",
+        "queries",
+        "database",
+    },
+
+    "enterprise": {
+        "enterprise",
+        "qapi",
+        "database",
+        "system",
+        "systems",
+        "architecture",
+        "integration",
+        "application",
+        "applications",
+    },
+
+    "web": {
+        "web",
+        "website",
+        "html",
+        "css",
+        "javascript",
+        "js",
+        "frontend",
+        "backend",
+        "api",
+        "fastapi",
+        "react",
+    },
+
+    "api": {
+        "api",
+        "rest",
+        "endpoint",
+        "endpoints",
+        "fastapi",
+        "http",
+        "json",
+        "request",
+        "response",
+    },
+
+    "software": {
+        "software",
+        "application",
+        "applications",
+        "programming",
+        "code",
+        "development",
+        "engineering",
+        "system",
+        "systems",
+    },
+
+    "data": {
+        "data",
+        "database",
+        "sql",
+        "analytics",
+        "reporting",
+        "report",
+        "records",
+        "dataset",
+        "datasets",
+        "etl",
+        "pipeline",
+    },
+
+    "reporting": {
+        "report",
+        "reports",
+        "reporting",
+        "dashboard",
+        "dashboards",
+        "analytics",
+        "powerbi",
+        "sql",
+    },
+
+    "security": {
+        "security",
+        "authentication",
+        "authorization",
+        "permissions",
+        "token",
+        "tokens",
+        "encryption",
+        "identity",
+        "oauth",
+    },
+
+    "testing": {
+        "test",
+        "tests",
+        "testing",
+        "unit",
+        "integration",
+        "uat",
+        "validation",
+        "qa",
+        "quality",
+    },
+
+    "quality": {
+        "quality",
+        "qapi",
+        "qa",
+        "validation",
+        "compliance",
+        "audit",
+        "testing",
+    },
+
+    "compliance": {
+        "compliance",
+        "regulatory",
+        "regulation",
+        "audit",
+        "auditing",
+        "policy",
+        "policies",
+        "quality",
+        "qapi",
+    },
+
+    "github": {
+        "github",
+        "repository",
+        "repo",
+        "git",
+        "branch",
+        "commit",
+    },
+
+    "frontend": {
+        "frontend",
+        "front",
+        "html",
+        "css",
+        "javascript",
+        "js",
+        "jsx",
+        "tsx",
+        "react",
+        "ui",
+        "interface",
+    },
+
+    "backend": {
+        "backend",
+        "server",
+        "api",
+        "fastapi",
+        "python",
+        "database",
+        "sql",
+    },
+
+    "cloud": {
+        "cloud",
+        "azure",
+        "aws",
+        "vercel",
+        "deployment",
+        "deploy",
+        "serverless",
+    },
+}
+
+
+# ============================================================
 # GITHUB HELPERS
 # ============================================================
 
 def get_repository(repository_name):
+
     if repository_name in EXCLUDED_REPOSITORIES:
         return None
 
@@ -52,9 +319,11 @@ def get_repository(repository_name):
 
 
 def should_include_file(path):
+
     path_object = Path(path)
 
     for part in path_object.parts:
+
         if part in IGNORED_NAMES:
             return False
 
@@ -65,19 +334,60 @@ def should_include_file(path):
 
 
 # ============================================================
+# TEXT / TOKEN HELPERS
+# ============================================================
+
+def tokenize_text(text):
+
+    if not text:
+        return []
+
+    text = text.lower()
+
+    # Convert separators into spaces.
+    text = re.sub(
+        r"[_\-/\\\.]+",
+        " ",
+        text
+    )
+
+    # Split camelCase / PascalCase.
+    text = re.sub(
+        r"([a-z])([A-Z])",
+        r"\1 \2",
+        text
+    )
+
+    words = re.findall(
+        r"[a-z0-9]+",
+        text
+    )
+
+    return words
+
+
+def build_concepts(tokens):
+
+    token_set = set(tokens)
+
+    concepts = set()
+
+    for concept, aliases in CONCEPT_ALIASES.items():
+
+        if token_set.intersection(aliases):
+            concepts.add(concept)
+
+    return sorted(concepts)
+
+
+# ============================================================
 # BUILD LIGHTWEIGHT FILE INDEX
 # ============================================================
 
-def get_repository_file_index(repository_name, branch=None):
-    """
-    Build a lightweight index of repository files.
-
-    IMPORTANT:
-    This does NOT download the contents of every file.
-
-    We only store metadata needed to determine which files
-    are relevant to a user's question later.
-    """
+def get_repository_file_index(
+    repository_name,
+    branch=None
+):
 
     repo = get_repository(repository_name)
 
@@ -88,8 +398,14 @@ def get_repository_file_index(repository_name, branch=None):
         branch = repo.default_branch
 
     print()
-    print(f"Indexing repository: {repository_name}")
-    print(f"Branch: {branch}")
+    print(
+        f"Indexing repository: "
+        f"{repository_name}"
+    )
+
+    print(
+        f"Branch: {branch}"
+    )
 
     tree = repo.get_git_tree(
         branch,
@@ -97,6 +413,15 @@ def get_repository_file_index(repository_name, branch=None):
     )
 
     files = []
+
+    # Repository itself becomes searchable.
+    repository_tokens = tokenize_text(
+        repository_name
+    )
+
+    repository_concepts = build_concepts(
+        repository_tokens
+    )
 
     for item in tree.tree:
 
@@ -108,13 +433,54 @@ def get_repository_file_index(repository_name, branch=None):
 
         path_object = Path(item.path)
 
+        filename_tokens = tokenize_text(
+            path_object.name
+        )
+
+        path_tokens = tokenize_text(
+            item.path
+        )
+
+        all_tokens = (
+            repository_tokens
+            + path_tokens
+            + filename_tokens
+        )
+
+        concepts = build_concepts(
+            all_tokens
+        )
+
         files.append({
-            "repository": repository_name,
-            "branch": branch,
-            "path": item.path,
-            "extension": path_object.suffix.lower(),
-            "sha": item.sha,
-            "size": getattr(item, "size", 0),
+
+            "repository":
+                repository_name,
+
+            "branch":
+                branch,
+
+            "path":
+                item.path,
+
+            "extension":
+                path_object.suffix.lower(),
+
+            "sha":
+                item.sha,
+
+            "size":
+                getattr(item, "size", 0),
+
+            "tokens":
+                sorted(set(all_tokens)),
+
+            "concepts":
+                sorted(
+                    set(
+                        repository_concepts
+                        + concepts
+                    )
+                ),
         })
 
     print(
@@ -126,14 +492,6 @@ def get_repository_file_index(repository_name, branch=None):
 
 
 def load_github_knowledge():
-    """
-    Build the GitHub knowledge index.
-
-    This intentionally does NOT download source code.
-
-    The resulting structure is small enough to keep in memory
-    and can scale to a much larger GitHub archive.
-    """
 
     knowledge = []
 
@@ -144,17 +502,21 @@ def load_github_knowledge():
 
     user = github.get_user()
 
-    repositories = user.get_repos(type="all")
+    repositories = user.get_repos(
+        type="all"
+    )
 
     for repo in repositories:
 
         repository_name = repo.full_name
 
         if repository_name in EXCLUDED_REPOSITORIES:
+
             print(
                 f"\nSkipping excluded repository: "
                 f"{repository_name}"
             )
+
             continue
 
         branch = repo.default_branch
@@ -178,7 +540,7 @@ def load_github_knowledge():
 
 
 # ============================================================
-# SEARCH FILE INDEX
+# SEARCH GITHUB KNOWLEDGE
 # ============================================================
 
 def search_github_knowledge(
@@ -186,17 +548,6 @@ def search_github_knowledge(
     search_terms,
     max_results=5
 ):
-    """
-    Search the lightweight GitHub file index.
-
-    No source code is downloaded during this operation.
-
-    Relevance is determined from:
-        - filename
-        - directory path
-        - repository name
-        - file extension
-    """
 
     if not search_terms:
         return []
@@ -207,54 +558,155 @@ def search_github_knowledge(
 
         term = term.lower().strip()
 
-        if term and term not in terms:
+        if (
+            term
+            and term not in terms
+            and len(term) > 2
+        ):
             terms.append(term)
+
+    # --------------------------------------------------------
+    # Expand user language into concepts.
+    # --------------------------------------------------------
+
+    expanded_concepts = set()
+
+    for term in terms:
+
+        for concept, aliases in CONCEPT_ALIASES.items():
+
+            if term in aliases:
+
+                expanded_concepts.add(
+                    concept
+                )
 
     results = []
 
     for file in github_knowledge:
 
-        repository = file["repository"].lower()
-        path = file["path"].lower()
-        extension = file["extension"].lower()
+        repository = file[
+            "repository"
+        ].lower()
 
-        filename = Path(path).name.lower()
+        path = file[
+            "path"
+        ].lower()
+
+        filename = Path(
+            path
+        ).name.lower()
+
+        file_tokens = set(
+            file.get(
+                "tokens",
+                []
+            )
+        )
+
+        file_concepts = set(
+            file.get(
+                "concepts",
+                []
+            )
+        )
 
         score = 0
 
+        # ----------------------------------------------------
+        # Direct matches
+        # ----------------------------------------------------
+
         for term in terms:
 
-            # Strongest match: filename
             if term in filename:
-                score += 25
+                score += 30
 
-            # Strong match: path
             if term in path:
                 score += 15
 
-            # Repository match
             if term in repository:
                 score += 10
 
-            # Extension match
-            if term == extension:
-                score += 5
+            if term in file_tokens:
+                score += 8
+
+        # ----------------------------------------------------
+        # Concept matches
+        # ----------------------------------------------------
+
+        for concept in expanded_concepts:
+
+            if concept in file_concepts:
+                score += 20
+
+        # ----------------------------------------------------
+        # Extension relevance
+        # ----------------------------------------------------
+
+        extension = file[
+            "extension"
+        ]
+
+        if (
+            "sql" in expanded_concepts
+            and extension == ".sql"
+        ):
+            score += 15
+
+        if (
+            "python" in expanded_concepts
+            and extension == ".py"
+        ):
+            score += 15
+
+        if (
+            "frontend" in expanded_concepts
+            and extension in {
+                ".html",
+                ".css",
+                ".js",
+                ".jsx",
+                ".ts",
+                ".tsx",
+            }
+        ):
+            score += 10
+
+        # ----------------------------------------------------
+        # Skip irrelevant files.
+        # ----------------------------------------------------
 
         if score == 0:
             continue
 
         results.append({
-            "repository": file["repository"],
-            "branch": file["branch"],
-            "path": file["path"],
-            "extension": file["extension"],
-            "sha": file["sha"],
-            "size": file["size"],
-            "score": score,
+
+            "repository":
+                file["repository"],
+
+            "branch":
+                file["branch"],
+
+            "path":
+                file["path"],
+
+            "extension":
+                file["extension"],
+
+            "sha":
+                file["sha"],
+
+            "size":
+                file["size"],
+
+            "score":
+                score,
         })
 
     results.sort(
-        key=lambda item: item["score"],
+        key=lambda item:
+            item["score"],
         reverse=True
     )
 
@@ -266,12 +718,6 @@ def search_github_knowledge(
 # ============================================================
 
 def load_file_content(file):
-    """
-    Retrieve the actual source code for a file after it has
-    been selected as relevant.
-
-    GitHub remains the source of truth.
-    """
 
     try:
 
@@ -282,8 +728,10 @@ def load_file_content(file):
         if repo is None:
             return None
 
-        # Protect the backend from extremely large files.
-        if file["size"] and file["size"] > MAX_FILE_SIZE:
+        if (
+            file["size"]
+            and file["size"] > MAX_FILE_SIZE
+        ):
 
             print(
                 f"Skipping oversized file: "
@@ -307,11 +755,21 @@ def load_file_content(file):
         )
 
         return {
-            "repository": file["repository"],
-            "branch": file["branch"],
-            "path": file["path"],
-            "content": content,
-            "score": file["score"],
+
+            "repository":
+                file["repository"],
+
+            "branch":
+                file["branch"],
+
+            "path":
+                file["path"],
+
+            "content":
+                content,
+
+            "score":
+                file["score"],
         }
 
     except Exception as error:
@@ -331,10 +789,6 @@ def get_relevant_github_files(
     search_terms,
     max_results=5
 ):
-    """
-    Search the lightweight index and then retrieve the actual
-    contents of only the most relevant files.
-    """
 
     matching_files = search_github_knowledge(
         github_knowledge,
@@ -346,12 +800,16 @@ def get_relevant_github_files(
 
     for file in matching_files:
 
-        content = load_file_content(file)
+        content = load_file_content(
+            file
+        )
 
         if content is None:
             continue
 
-        relevant_files.append(content)
+        relevant_files.append(
+            content
+        )
 
     return relevant_files
 
@@ -370,24 +828,56 @@ if __name__ == "__main__":
         f"{len(knowledge)}"
     )
 
-    test_terms = [
-        "database",
-        "sql",
-        "employee",
+    test_questions = [
+
+        [
+            "database",
+            "sql",
+            "enterprise",
+        ],
+
+        [
+            "python",
+            "automation",
+        ],
+
+        [
+            "powerbi",
+            "reporting",
+            "analytics",
+        ],
+
+        [
+            "web",
+            "api",
+            "backend",
+        ],
+
     ]
 
-    results = get_relevant_github_files(
-        knowledge,
-        test_terms,
-        max_results=5
-    )
+    for test_terms in test_questions:
 
-    print()
-    print("Relevant files:")
-
-    for result in results:
+        print()
+        print(
+            "=" * 60
+        )
 
         print(
-            f"- {result['repository']}/"
-            f"{result['path']}"
+            "TEST:",
+            " ".join(test_terms)
         )
+
+        results = search_github_knowledge(
+            knowledge,
+            test_terms,
+            max_results=5
+        )
+
+        for result in results:
+
+            print(
+                result["score"],
+                result["repository"],
+                result["path"]
+            )
+```
